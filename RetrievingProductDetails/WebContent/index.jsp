@@ -10,7 +10,7 @@ Retrieving the Product Details Using the Product ID</title>
 <body>
 		<form action="searchProduct" method="post">
     		Enter the Product ID to search: <input type="text" name="productID" size="20">
-    		<input type="submit" value="Call Servlet" />
+    		<input type="submit" value="Search" />
 		</form>
 </body>
 </html>

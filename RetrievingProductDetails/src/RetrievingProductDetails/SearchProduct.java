@@ -57,26 +57,8 @@ public class SearchProduct extends HttpServlet {
 			res = searchID(id, con);
 			
 			response.setContentType("text/html");  
-	        out.println("<html><body>");
-	        out.println("<form action=\"searchProduct\" method=\"post\">"
-	        		+ "Enter the Product ID to search: " 
-	        		+ "<input type=\"text\" name=\"productID\" size=\"20\">"
-	        		+ "<input type=\"submit\" value=\"Call Servlet\" /></form>");
-	        out.println("<table style = \"width:50%\"><tr>\n"
-	        		+ "<th>ID</th>"
-	        		+ "<th>Name</th>"
-	        		+ "<th>Description</th>"
-	        		+ "</tr>");
-			if (res.next()) {
-				int prod_id = res.getInt("product_id");
-				String name = res.getString("product_name");
-				String details = res.getString("product_details");
-				
-				out.println("<tr><td>" + prod_id + "</td><td>" +  name + "</td><td>" + details + "</td></tr></table>");
-			} else {
-				out.println("No product with id " + id + " was found!");
-			}
-			out.println("</html><head>"
+	        out.println("<html>" // Begin HTML
+	        		+ "<head>" // Head
 					+ "<style>"
 					+ "table {"
 					+ "  font-family: arial, sans-serif;"
@@ -89,7 +71,29 @@ public class SearchProduct extends HttpServlet {
 					+ "tr:nth-child(even) {"
 					+ "  background-color: #dddddd;}"
 					+ "</style>"
-					+ "</head></body>");  
+					+ "</head>" // End Head
+	        		+ "<body>"); // Body
+	        // Form
+	        out.println("<form action=\"searchProduct\" method=\"post\">"
+	        		+ "Enter the Product ID to search: " 
+	        		+ "<input type=\"text\" name=\"productID\" size=\"20\">"
+	        		+ "<input type=\"submit\" value=\"Search\" /></form>");
+	        // Table
+	        out.println("<table style = \"width:50%\"><tr>\n"
+	        		+ "<th>ID</th>"
+	        		+ "<th>Name</th>"
+	        		+ "<th>Description</th>"
+	        		+ "</tr>");
+			if (res.next()) {
+				int prod_id = res.getInt("product_id");
+				String name = res.getString("product_name");
+				String details = res.getString("product_details");
+				
+				out.println("<tr><td>" + prod_id + "</td><td>" +  name + "</td><td>" + details + "</td></tr></table>"); 
+			} else {
+				out.println("No product with id " + id + " was found!");
+			}
+			out.println("</body></html>"); //End Body and HTML
             con.close();  
 		} catch (ClassNotFoundException e) {
 			log("Sorry, couldn't found JDBC driver. Make sure you have added JDBC Maven Dependency Correctly");
