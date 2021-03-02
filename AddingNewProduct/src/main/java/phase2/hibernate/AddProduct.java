@@ -54,7 +54,6 @@ public class AddProduct extends HttpServlet {
 	    	request.setAttribute("errorMessage", "Missing Parameter! Please make sure that all fields are filled");
 	    	request.getRequestDispatcher("index.jsp").forward(request, response);
 	    }
-		
 	}
 
 }
