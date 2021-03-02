@@ -1,5 +1,7 @@
 package phase2.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -7,11 +9,16 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 public class ProductManager {
 	private static StandardServiceRegistry registry;
 	private static SessionFactory sessionFactory;
  
+	public ProductManager() {
+		setup();
+	}
+	
     protected void setup() {
     	try {
             // Creating a registry
@@ -39,12 +46,22 @@ public class ProductManager {
     	sessionFactory.close();
     }
  
-    protected void create() {
-        // code to save a book
+    protected void add(String name, String details) {
+        Product product = new Product();
+        product.setName(name);
+        product.setDetails(details);
+        
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+     
+        session.save(product);
+     
+        session.getTransaction().commit();
+        session.close();
     }
  
     protected void read(long id) {
-        // code to get a book
+        // get a product by Id
     	Session session = sessionFactory.openSession();
     	long hid = 1;
         Product product = session.get(Product.class, id);
@@ -53,23 +70,13 @@ public class ProductManager {
      
         session.close();
     }
- 
-    protected void update() {
-        // code to modify a book
-    }
- 
-    protected void delete() {
-        // code to remove a book
-    }
- 
-    public static void main(String[] args) {
-        // code to run the program
-    	ProductManager manager = new ProductManager();
-        manager.setup();
-        manager.read(2);
-        if (manager.sessionFactory == null) {
-        	System.out.println("sessionfactory is null");
-        }
-     
+    
+    protected List<Product> getProducts() {
+    	Session session = sessionFactory.openSession();
+    	String hql = "FROM product_tbl";
+    	Query query = session.createQuery(hql, Product.class);
+    	List results = query.list();
+    	session.close();
+    	return results;
     }
 }

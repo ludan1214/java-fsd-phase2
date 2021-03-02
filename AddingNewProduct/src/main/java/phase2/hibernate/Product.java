@@ -1,8 +1,7 @@
 package phase2.hibernate;
 import javax.persistence.*;
 
-@Entity
-@Table(name = "product_tbl")
+@javax.persistence.Entity(name = "product_tbl")
 public class Product {
 	private long product_id;
 	private String product_name;
