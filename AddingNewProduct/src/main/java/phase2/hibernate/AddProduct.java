@@ -48,8 +48,13 @@ public class AddProduct extends HttpServlet {
 		String name = request.getParameter("product_name");
 	    String details = request.getParameter("product_details");
 	    ProductManager manager = new ProductManager();
-	    manager.add(name,details);
-		doGet(request, response);
+	    if (manager.add(name,details)) {
+	    	doGet(request, response);
+	    } else { // Invalid Input 
+	    	request.setAttribute("errorMessage", "Missing Parameter! Please make sure that all fields are filled");
+	    	request.getRequestDispatcher("index.jsp").forward(request, response);
+	    }
+		
 	}
 
 }

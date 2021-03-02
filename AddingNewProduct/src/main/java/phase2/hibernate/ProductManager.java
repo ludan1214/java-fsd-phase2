@@ -46,8 +46,11 @@ public class ProductManager {
     	sessionFactory.close();
     }
  
-    protected void add(String name, String details) {
+    protected boolean add(String name, String details) {
         Product product = new Product();
+        if (name == null || details == null || name.equals("") || details.equals("")) {
+        	return false;
+        }
         product.setName(name);
         product.setDetails(details);
         
@@ -58,6 +61,7 @@ public class ProductManager {
      
         session.getTransaction().commit();
         session.close();
+        return true;
     }
  
     protected void read(long id) {

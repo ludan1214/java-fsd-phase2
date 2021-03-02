@@ -13,6 +13,7 @@
 
 <p><strong>Enter Product Details to Add to the Database</strong></p>
 <form action="/AddingNewProduct/addProduct" method="POST">
+		<div style="color: #FF0000;">${errorMessage}</div>
 		Product Name: <input type="text" name="product_name"> <br />
 		Product Details: <input type="text" name="product_details" /> <br><input type="submit"
 			value="Submit" />
